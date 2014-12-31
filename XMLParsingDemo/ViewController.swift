@@ -35,7 +35,7 @@ class ViewController: UIViewController, NSXMLParserDelegate
     func beginParsing()
     {
         posts = []
-        parser = NSXMLParser(contentsOfURL: (NSURL.URLWithString("http://images.apple.com/main/rss/hotnews/hotnews.rss")))
+        parser = NSXMLParser(contentsOfURL:(NSURL(string:"http://images.apple.com/main/rss/hotnews/hotnews.rss")))!
         parser.delegate = self
         parser.parse()
         
@@ -61,10 +61,10 @@ class ViewController: UIViewController, NSXMLParserDelegate
     func parser(parser: NSXMLParser!, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!)
     {
         if (elementName as NSString).isEqualToString("item") {
-            if title1 != nil {
+            if !title1.isEqual(nil) {
                 elements.setObject(title1, forKey: "title")
             }
-            if date != nil {
+            if !date.isEqual(nil) {
                 elements.setObject(date, forKey: "date")
             }
             
@@ -96,7 +96,7 @@ class ViewController: UIViewController, NSXMLParserDelegate
         }
         
         cell.textLabel.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as NSString
-        cell.detailTextLabel.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as NSString
+        cell.detailTextLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as NSString
         
         return cell as UITableViewCell
     }
