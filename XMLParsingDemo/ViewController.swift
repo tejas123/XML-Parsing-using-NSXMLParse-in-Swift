@@ -95,7 +95,7 @@ class ViewController: UIViewController, NSXMLParserDelegate
             cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as UITableViewCell;
         }
         
-        cell.textLabel.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as NSString
+        cell.textLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as NSString
         cell.detailTextLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as NSString
         
         return cell as UITableViewCell
