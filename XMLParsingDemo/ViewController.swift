@@ -44,7 +44,7 @@ class ViewController: UIViewController, NSXMLParserDelegate
     
     //XMLParser Methods
     
-    func parser(parser: NSXMLParser!, didStartElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!, attributes attributeDict: [NSObject : AnyObject]!)
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject : AnyObject])
     {
         element = elementName
         if (elementName as NSString).isEqualToString("item")
@@ -58,7 +58,7 @@ class ViewController: UIViewController, NSXMLParserDelegate
         }
     }
     
-    func parser(parser: NSXMLParser!, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!)
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?)
     {
         if (elementName as NSString).isEqualToString("item") {
             if !title1.isEqual(nil) {
@@ -72,12 +72,12 @@ class ViewController: UIViewController, NSXMLParserDelegate
         }
     }
     
-    func parser(parser: NSXMLParser!, foundCharacters string: String!)
+    func parser(parser: NSXMLParser, foundCharacters string: String?)
     {
         if element.isEqualToString("title") {
-            title1.appendString(string)
+            title1.appendString(string!)
         } else if element.isEqualToString("pubDate") {
-            date.appendString(string)
+            date.appendString(string!)
         }
     }
     
@@ -90,13 +90,13 @@ class ViewController: UIViewController, NSXMLParserDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell : UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as UITableViewCell
+        var cell : UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
         if(cell == nil) {
-            cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as UITableViewCell;
+            cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as! UITableViewCell;
         }
         
-        cell.textLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as NSString
-        cell.detailTextLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as NSString
+        cell.textLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as! NSString as String
+        cell.detailTextLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as! NSString as String
         
         return cell as UITableViewCell
     }
