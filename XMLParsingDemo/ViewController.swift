@@ -35,7 +35,7 @@ class ViewController: UIViewController, NSXMLParserDelegate
     func beginParsing()
     {
         posts = []
-        parser = NSXMLParser(contentsOfURL:(NSURL(string:"http://images.apple.com/main/rss/hotnews/hotnews.rss")))!
+        parser = NSXMLParser(contentsOfURL:(NSURL(string:"http://images.apple.com/main/rss/hotnews/hotnews.rss"))!)!
         parser.delegate = self
         parser.parse()
         
@@ -44,16 +44,16 @@ class ViewController: UIViewController, NSXMLParserDelegate
     
     //XMLParser Methods
     
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject : AnyObject])
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String])
     {
         element = elementName
         if (elementName as NSString).isEqualToString("item")
         {
-            elements = NSMutableDictionary.alloc()
+            elements = NSMutableDictionary()
             elements = [:]
-            title1 = NSMutableString.alloc()
+            title1 = NSMutableString()
             title1 = ""
-            date = NSMutableString.alloc()
+            date = NSMutableString()
             date = ""
         }
     }
@@ -72,12 +72,12 @@ class ViewController: UIViewController, NSXMLParserDelegate
         }
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String?)
+    func parser(parser: NSXMLParser, foundCharacters string: String)
     {
         if element.isEqualToString("title") {
-            title1.appendString(string!)
+            title1.appendString(string)
         } else if element.isEqualToString("pubDate") {
-            date.appendString(string!)
+            date.appendString(string)
         }
     }
     
@@ -90,8 +90,9 @@ class ViewController: UIViewController, NSXMLParserDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        var cell : UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("Cell") as! UITableViewCell
-        if(cell == nil) {
+        var cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+        
+        if(cell.isEqual(NSNull)) {
             cell = NSBundle.mainBundle().loadNibNamed("Cell", owner: self, options: nil)[0] as! UITableViewCell;
         }
         
